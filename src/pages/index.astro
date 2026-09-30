@@ -1,0 +1,105 @@
+---
+const pdfFiles = import.meta.glob('/src/content/docs/*.pdf', { eager: true });
+
+const posts = Object.keys(pdfFiles).map((filePath) => {
+  const fileName = filePath.split('/').pop() || '';
+  const title = fileName.replace('.pdf', '').replace(/-/g, ' ');
+  const publicUrl = `./docs/${fileName}`;
+  
+  return { fileName, title, publicUrl };
+});
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pensamientos Libidinosos</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 2rem 1rem;
+    }
+    main {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #ff4081;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    p.subtitle {
+      text-align: center;
+      color: #a0a0a0;
+      font-style: italic;
+      margin-bottom: 3rem;
+    }
+    article {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    h2 {
+      color: #ffffff;
+      text-transform: capitalize;
+      margin-top: 0;
+    }
+    a.download-btn {
+      display: inline-block;
+      color: #ff4081;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    a.download-btn:hover {
+      text-decoration: underline;
+    }
+    .pdf-container {
+      width: 100%;
+      height: 650px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #444;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Pensamientos Libidinosos</h1>
+    <p class="subtitle">Bitácora digital y archivo de publicaciones en PDF</p>
+
+    {posts.length === 0 ? (
+      <p style="text-align: center; color: #888;">Aún no hay lecturas publicadas en <code>src/content/docs/</code>.</p>
+    ) : (
+      posts.map((post) => (
+        <article>
+          <h2>{post.title}</h2>
+          <a class="download-btn" href={post.publicUrl} target="_blank" rel="noopener noreferrer">
+            ↗ Abrir / Descargar PDF en pestaña nueva
+          </a>
+          
+          <div class="pdf-container">
+            <iframe src={post.publicUrl} title={post.title}>
+              Tu navegador no puede mostrar el visor directame. <a href={post.publicUrl}>Descargar PDF aquí</a>.
+            </iframe>
+          </div>
+        </article>
+      ))
+    )}
+  </main>
+</body>
+</html>
