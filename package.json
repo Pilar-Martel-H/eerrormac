@@ -1,0 +1,16 @@
+{
+  "name": "pensamientos-libidinosos",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.0.0",
+    "vite-plugin-static-copy": "^1.0.0"
+  }
+}
